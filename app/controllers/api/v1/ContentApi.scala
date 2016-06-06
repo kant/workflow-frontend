@@ -14,7 +14,7 @@ import scala.util.Try
 
 object ContentApi extends Controller with PanDomainAuthActions with WorkflowApi {
 
-  def contentById(id: String) =  CORSable(composerUrl) {
+  def contentById(id: String) =  CORSable(composerUrls:_*) {
     APIAuthAction.async {
       ApiResponseFt[Option[ContentItem]](for {
         item <- Try(id.toLong).toOption match {

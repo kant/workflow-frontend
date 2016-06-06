@@ -9,10 +9,10 @@ import play.api.mvc._
 
 
 trait WorkflowApi {
-  val composerUrl = Config.composerUrl
+  val composerUrls = List(Config.composerUrl, Config.composerSecondaryUrl)
   val apiBaseUrl  = "/api/v1/"
 
-  def allowCORSAccess(methods: String, args: Any*) = CORSable(composerUrl) {
+  def allowCORSAccess(methods: String, args: Any*) = CORSable(composerUrls:_*) {
     Action { implicit req =>
       val requestedHeaders = req.headers("Access-Control-Request-Headers")
       NoContent.withHeaders("Access-Control-Allow-Methods" -> methods, "Access-Control-Allow-Headers" -> requestedHeaders)
