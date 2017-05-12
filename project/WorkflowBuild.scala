@@ -53,7 +53,6 @@ object WorkflowBuild extends Build {
  def appDistSettings(application: String, deployJsonDir: Def.Initialize[File] = baseDirectory) = Seq(
     packageName in Universal := application,
     concurrentRestrictions in Universal := List(Tags.limit(Tags.All, 1)),
-    riffRaffPackageType := (packageZipTarball in Universal).value,
     riffRaffBuildIdentifier := Option(System.getenv("CIRCLE_BUILD_NUM")).getOrElse("dev"),
     riffRaffUploadArtifactBucket := Option("riffraff-artifact"),
     riffRaffUploadManifestBucket := Option("riffraff-builds"),
@@ -61,7 +60,7 @@ object WorkflowBuild extends Build {
     riffRaffPackageName := s"editorial-tools:workflow:$application",
     riffRaffManifestProjectName := riffRaffPackageName.value,
     riffRaffArtifactResources := Seq(
-      riffRaffPackageType.value -> s"packages/$application/$application.tgz",
+      (packageBin in Debian).value -> s"packages/${name.value}/${name.value}.deb",
       baseDirectory.value / "conf" / "deploy.json" -> "deploy.json"
     ),
     artifactName in Universal := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
