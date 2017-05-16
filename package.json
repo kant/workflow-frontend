@@ -32,6 +32,7 @@
     "angular-bootstrap-datetimepicker": "1.1.4",
     "angular-bootstrap-temporary": "0.11.0",
     "angular-mocks": "1.5.11",
+    "angular-moment-picker": "^0.10.0",
     "angular-ui-router": "0.2.11",
     "bootstrap": "3.2.0",
     "chai": "^3.5.0",

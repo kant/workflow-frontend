@@ -16,40 +16,16 @@
 
 // 3rd party dependencies
 import angular from 'angular';
-import moment from 'moment';
-import 'angular-bootstrap-datetimepicker';
-import 'angular-bootstrap-datetimepicker/src/css/datetimepicker.css';
+
+import 'angular-moment-picker';
+import 'angular-moment-picker/dist/angular-moment-picker.css';
 
 // local dependencies
 import 'lib/date-service';
 
 import dateTimePickerTemplate from './date-time-picker.html';
 
-angular.module('wfDateTimePicker', ['ui.bootstrap.datetimepicker', 'wfDateService'])
-
-    // Add a listener to ui.bootstrap.datetimepicker to reset the picker to day view
-    // Written using the second example from here http://angular-tips.com/blog/2013/09/experiment-decorating-directives/
-    .config(function dateTimePickerMonkeyPatch($provide) {
-        $provide.decorator('datetimepickerDirective', function($delegate) {
-            var directive = $delegate[0];
-
-            function getUTCTimeNow() {
-                var timeNow = new Date();
-                return timeNow.getTime() - (timeNow.getTimezoneOffset() * 60000);
-            }
-
-            directive.compile = function() {
-                return function(scope, element, attrs) {
-                    // add extra listener to link
-                    scope.$on('resetPicker', function () {
-                        scope.changeView('day', getUTCTimeNow());
-                    })
-                }
-            };
-            return $delegate
-        });
-    })
-
+angular.module('wfDateTimePicker', ['moment-picker', 'wfDateService'])
     .directive('wfDateTimePicker', ['$log', '$timeout', 'wfDateParser', 'wfLocaliseDateTimeFilter', 'wfFormatDateTimeFilter', function ($log, $timeout, wfDateParser, wfLocaliseDateTimeFilter, wfFormatDateTimeFilter) {
 
         var pickerCount = 0;
@@ -80,6 +56,7 @@ angular.module('wfDateTimePicker', ['ui.bootstrap.datetimepicker', 'wfDateServic
                 $element.addClass('date-time-picker');
 
                 // Watch for model updates to dateValue, and update datePicker when changes
+                console.log(dateValue);
                 $scope.$watch('dateValue', function (newValue) {
                     if ($scope.datePickerValue != newValue) {
 

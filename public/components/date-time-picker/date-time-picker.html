@@ -5,14 +5,25 @@
     <input class="date-time-picker__text-input form-control" type="text" placeholder="{{ placeholderText }}" wf-date-time-field id="{{dateTimePicker.textInputId}}" name="due" wf-on-cancel="onCancel()" wf-on-update="onUpdate()" wf-on-submit="onSubmit()" wf-update-on="{{updateOn}}" wf-cancel-on="{{cancelOn}}" ng-class="{'input-sm': small}">
 
     <div dropdown class="input-group-btn">
-
-        <button type="button" id="{{dateTimePicker.dropDownButtonId}}" class="btn btn-default dropdown-toggle date-time-picker__dropdown" ng-class="{'btn-sm': small}">
+        <button type="button"
+                id="{{dateTimePicker.dropDownButtonId}}"
+                class="btn btn-default"
+                ng-class="{'btn-sm': small}"
+                change="dateTimePicker.onDatePicked(newDate)"
+                moment-picker="datePickerValue"
+                min-view="month"
+                max-view="hour"
+                autoclose="true">
             <i class="glyphicon glyphicon-calendar"></i></button>
 
-        <ul class="dropdown-menu pull-right" role="menu">
+        <!--<button type="button" id="{{dateTimePicker.dropDownButtonId}}" class="btn btn-default dropdown-toggle date-time-picker__dropdown" ng-class="{'btn-sm': small}">
+            <i class="glyphicon glyphicon-calendar"></i></button>-->
+
+        <!--<ul class="dropdown-menu pull-right" role="menu">
+
+            
             <datetimepicker class="date-time-picker__dropdown-picker" ng-model="datePickerValue" on-set-time="dateTimePicker.onDatePicked(newDate)"></datetimepicker>
-        </ul>
-        </ul>
+        </ul>-->
     </div>
 </div>
 <span class="help-block" ng-class="{'small': small}">{{ dateValue | wfLocaliseDateTime:$root.globalSettings.location | wfFormatDateTime:'ddd D MMM YYYY HH:mm z' }}</span>

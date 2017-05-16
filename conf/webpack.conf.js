@@ -58,7 +58,11 @@ module.exports = {
     },
 
     plugins: [
-        new ExtractTextPlugin('main.css')
+        new ExtractTextPlugin('main.css'),
+        new webpack.ProvidePlugin({
+            // datetimepicker needs moment to be a global object
+            moment: "moment"
+        })
     ]
 };
 

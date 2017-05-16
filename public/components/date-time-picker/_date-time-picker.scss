@@ -20,3 +20,9 @@
     }
   }
 }
+
+
+// For the 3rd party moment-picker
+.moment-picker {
+    z-index: 1051 // 1 more than bootstrap modals
+}

@@ -77,6 +77,13 @@ angular-mocks@1.5.11:
   version "1.5.11"
   resolved "https://registry.yarnpkg.com/angular-mocks/-/angular-mocks-1.5.11.tgz#a0e1dd0ea55fd77ee7a757d75536c5e964c86f81"
 
+angular-moment-picker@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/angular-moment-picker/-/angular-moment-picker-0.10.0.tgz#7a6ee1d4197bf3970793518af290bf5332b26067"
+  dependencies:
+    angular "^1.3"
+    moment "^2.16.0"
+
 angular-ui-router@0.2.11:
   version "0.2.11"
   resolved "https://registry.yarnpkg.com/angular-ui-router/-/angular-ui-router-0.2.11.tgz#69d5c0f413d732b9f57aa8351346be2d6805ac63"
@@ -85,7 +92,7 @@ angular@1.5.11:
   version "1.5.11"
   resolved "https://registry.yarnpkg.com/angular/-/angular-1.5.11.tgz#8c5ba7386f15965c9acf3429f6881553aada30d6"
 
-angular@^1.6.3:
+angular@^1.3, angular@^1.6.3:
   version "1.6.4"
   resolved "https://registry.yarnpkg.com/angular/-/angular-1.6.4.tgz#03b7b15c01a0802d7e2cf593240e604054dc77fb"
 
@@ -2829,7 +2836,7 @@ moment-timezone@0.5.13:
   dependencies:
     moment ">= 2.9.0"
 
-moment@2.18.1, "moment@>= 2.9.0", moment@^2.18.1:
+moment@2.18.1, "moment@>= 2.9.0", moment@^2.16.0, moment@^2.18.1:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 
