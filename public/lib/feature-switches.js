@@ -1,9 +1,9 @@
 define([], function () {
 
-    const module = angular.module('wfFeatureSwitches', []);
+    var module = angular.module('wfFeatureSwitches', []);
 
     module.factory('wfFeatureSwitches', ['config', '$http', function(config, $http) {
-        const self = {};
+        var self = {};
 
         // dummy switches - eventually this will come from the server
         // via an API call
@@ -12,13 +12,11 @@ define([], function () {
             return document.cookie.search(cookieName + "=1(;|$)") != -1;
         }
 
-        const staticSwitchData = {
+        var staticSwitchData = {
             "presence-indicator": simpleCookie("presence-indicator"),
-            "incopy-export": simpleCookie("incopy-export"),
-            "support-atoms": simpleCookie("support-atoms")
-        };
-
-        const switches = new Promise(function (resolve, reject) {
+            "incopy-export": simpleCookie("incopy-export")
+        }
+        var switches = new Promise(function(resolve, reject) {
             resolve(staticSwitchData);
         });
 
@@ -33,4 +31,4 @@ define([], function () {
         return self;
 
     }]);
-});
+})
