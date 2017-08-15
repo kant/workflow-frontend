@@ -23,6 +23,9 @@ case class CORSable[A](allowedOrigins: Set[String])(action: Action[A]) extends A
   def apply(request: Request[A]): Future[Result] = {
 
     val headers = request.headers.get("Origin").map { origin =>
+      Logger.info(s"Origin $origin")
+      allowedOrigins.foreach(x => Logger.info(s"Allowed Origins include $x"))
+      
       if(allowedOrigins.contains(origin)) {
         List("Access-Control-Allow-Origin" -> origin, "Access-Control-Allow-Credentials" -> "true")
       } else { Nil }
