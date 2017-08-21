@@ -1,4 +1,4 @@
-@(audience: EditorialSupportTeam, fronts: EditorialSupportTeam)
+@(audience: EditorialSupportTeam, fronts: List[FrontsTeam])
 
 @renderTeam(team: EditorialSupportTeam) = {
 @for(staff <- team.staff) {
@@ -26,9 +26,13 @@
                 <h2>@audience.name team</h2>
                 @renderTeam(audience)
                 @renderAddStaff(audience.name)
-                <h2>@fronts.name team</h2>
-                @renderTeam(fronts)
-                @renderAddStaff(fronts.name)
+                <h2>Fronts</h2>
+                @for(front <- fronts) {
+                    <ul>
+                        <label>@front.name</label>
+                        <input type="text" value="@front.activeStaff" id="frontsTeam-@front.id" onChange="window.updateFrontsTeam('@front.id', '@front.activeStaff')">
+                    </ul>
+                }
             </div>
         </div>
     </div>

@@ -4,7 +4,7 @@ import com.amazonaws.services.dynamodbv2.document.AttributeUpdate
 import com.amazonaws.services.dynamodbv2.document.spec.UpdateItemSpec
 import com.gu.workflow.util.Dynamo
 import config.Config
-import models.{EditorialSupportStaff, EditorialSupportTeam}
+import models.{EditorialSupportStaff, EditorialSupportTeam, FrontsTeam}
 import play.api.mvc.Controller
 
 import scala.collection.JavaConversions._
@@ -12,6 +12,7 @@ import scala.collection.JavaConversions._
 object EditorialSupportTeamsController extends Controller with PanDomainAuthActions with Dynamo {
 
   val editorialSupportTable = dynamoDb.getTable(Config.editorialSupportDynamoTable)
+  val frontsTeamTable = dynamoDb.getTable(Config.frontsTeamsDynamoTable)
 
   def createNewStaff(name: String, team: String) = {
     editorialSupportTable.putItem(EditorialSupportStaff(java.util.UUID.randomUUID().toString, name, false, team).toItem)
@@ -25,6 +26,10 @@ object EditorialSupportTeamsController extends Controller with PanDomainAuthActi
     val staff = getStaff()
     def extractTeam(name: String): EditorialSupportTeam = EditorialSupportTeam(name, staff.filter(x => x.team == name))
     List(extractTeam("Audience"), extractTeam("Fronts"))
+  }
+
+  def getFrontsTeams():List[FrontsTeam] = {
+    frontsTeamTable.scan().map(FrontsTeam.fromItem).toList
   }
 
   def toggleStaffStatus(id: String, active: Boolean) = {
@@ -49,6 +54,14 @@ object EditorialSupportTeamsController extends Controller with PanDomainAuthActi
           .withAttributeUpdate(new AttributeUpdate("description").put(description))
       )
     }
+  }
+
+  def updateFrontsTeam(id: String, staff: String) = {
+    frontsTeamTable.updateItem(
+      new UpdateItemSpec()
+        .withPrimaryKey("id", id)
+        .withAttributeUpdate(new AttributeUpdate("activeStaff").put(if (staff.isEmpty) " " else staff))
+    )
   }
 
 }

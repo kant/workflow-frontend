@@ -317,5 +317,16 @@ object Api extends Controller with PanDomainAuthActions {
     Ok(s"Description updated to '$description'")
   }
 
+  def frontsTeams = CORSable(defaultCorsAble) {
+    APIAuthAction {
+      Ok(Json.toJson(EditorialSupportTeamsController.getFrontsTeams()))
+    }
+  }
+
+  def updateFrontsTeam(id: String, activeStaff: String) = APIAuthAction {
+    EditorialSupportTeamsController.updateFrontsTeam(id, activeStaff)
+    Ok("Fronts team updated")
+  }
+
   def sharedAuthGetContent = SharedSecretAuthAction.async(getContentBlock)
 }

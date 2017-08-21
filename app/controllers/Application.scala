@@ -59,7 +59,7 @@ object Application extends Controller with PanDomainAuthActions {
   def editorialSupport = AuthAction { request =>
     val teams = EditorialSupportTeamsController.getTeams()
     def filterTeam(name: String) = teams.filter(x => x.name == name).head
-    Ok(views.html.editorialSupportStatus(filterTeam("Audience"), filterTeam("Fronts")))
+    Ok(views.html.editorialSupportStatus(filterTeam("Audience"), EditorialSupportTeamsController.getFrontsTeams()))
   }
 
   // limited tag fields we want output into the DOM

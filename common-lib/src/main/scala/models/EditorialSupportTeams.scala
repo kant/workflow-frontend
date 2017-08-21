@@ -17,3 +17,10 @@ object EditorialSupportTeam { implicit val jf: Format[EditorialSupportTeam] = Js
 case class EditorialSupportStaffTracking(teams: List[EditorialSupportTeam])
 
 object EditorialSupportStaffTracking { implicit val jf: Format[EditorialSupportStaffTracking] = Json.format[EditorialSupportStaffTracking] }
+
+case class FrontsTeam(id: String, name: String, activeStaff: String) { def toItem = Item.fromJSON(Json.toJson(this).toString()) }
+
+object FrontsTeam {
+  implicit val jw: Format[FrontsTeam] = Json.format[FrontsTeam]
+  def fromItem(item: Item) = Json.parse(item.toJSON).as[FrontsTeam]
+}

@@ -36,6 +36,18 @@ function updateStatus(id, startText) {
 
 }
 
+function updateFrontsTeam(id, startText) {
+    var text = document.getElementById("frontsTeam-"+id).value.replace(/[^\w\s.,!?/]/gi, '');
+    if (text !== startText) {
+        var endpoint = `/api/editorialSupportTeams/fronts?id=${id}&activeStaff=${text}`;
+        fetch(endpoint, {
+            method: 'PUT',
+            credentials: 'same-origin'
+        }).then(reloadOnComplete)
+    }
+}
+
 window ? window.addNewStaff = addNewStaff : false
 window ? window.toggleStaff = toggleStaff : false
 window ? window.updateStatus = updateStatus : false
+window ? window.updateFrontsTeam = updateFrontsTeam : false

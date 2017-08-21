@@ -52,6 +52,9 @@ PUT            /api/editorialSupportTeams                  controllers.Api.addEd
 POST           /api/editorialSupportTeams/toggle           controllers.Api.toggleEditorialSupportStaff(id, active)
 POST           /api/editorialSupportTeams/update           controllers.Api.updateEditorialSupportStaffDescription(id, description)
 
+GET            /api/editorialSupportTeams/fronts           controllers.Api.frontsTeams
+PUT            /api/editorialSupportTeams/fronts           controllers.Api.updateFrontsTeam(id, activeStaff)
+
 # CAPI
 GET            /capi/*path                                 controllers.CAPIService.previewCapiProxy(path)
 
