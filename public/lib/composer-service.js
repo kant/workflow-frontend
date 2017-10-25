@@ -1,9 +1,9 @@
 import angular from 'angular';
 
 angular.module('wfComposerService', [])
-    .service('wfComposerService', ['$http', '$q', 'config', 'wfHttpSessionService', wfComposerService]);
+    .service('wfComposerService', ['$http', '$q', 'config', '$log', 'wfHttpSessionService', wfComposerService]);
 
-function wfComposerService($http, $q, config, wfHttpSessionService) {
+function wfComposerService($http, $q, config, $log, wfHttpSessionService) {
 
     const request = wfHttpSessionService.request;
 
@@ -14,14 +14,12 @@ function wfComposerService($http, $q, config, wfHttpSessionService) {
         return url.substring(url.lastIndexOf('/') + 1);
     }
 
-
     function deepSearch(obj, path) {
         if (path.length === 0) return obj;
         const next = path[0];
         if (obj[next]) return deepSearch(obj[next], path.slice(1));
         else return null;
     }
-
 
     // Mapping of workflow content fields to transform functions on composer response
     const composerParseMap = {
@@ -46,15 +44,20 @@ function wfComposerService($http, $q, config, wfHttpSessionService) {
     function parseComposerData(response, target) {
         target = target || {};
 
-        const data = response.data;
+        if (!response.data || !response.data.data || !response.data.data.id) {
+            $log.error("Composer response missing id field. Response: " + JSON.stringify(response) + " \n Stub metadata: " + JSON.stringify(target))
+            return Promise.reject({
+                message: "composer response did not contain id, response: " + JSON.stringify(response)})
+        } else {
+            const data = response.data.data;
 
-        Object.keys(composerParseMap).forEach((key) => {
-            target[key] = composerParseMap[key](data);
-        });
+            Object.keys(composerParseMap).forEach((key) => {
+                target[key] = composerParseMap[key](data);
+            });
 
-        return target;
+            return Promise.resolve(target);
+        }
     }
-
 
     function getComposerContent(url) {
         return $http({
@@ -65,11 +68,8 @@ function wfComposerService($http, $q, config, wfHttpSessionService) {
         });
     }
 
-
     this.getComposerContent = getComposerContent;
-
     this.parseComposerData = parseComposerData;
-
 
     this.create = function createInComposer(type, commissioningDesks) {
         return request({
